@@ -27,7 +27,9 @@ class DFPlayer : public DFPlayerCore
 {
 	public:
 	
-		DFPlayer(uint8_t TXPin, uint8_t busyPin) : DFPlayerCore(TXPin, busyPin) {}
+		DFPlayer(uint8_t TXPin, uint8_t busyPin) : DFPlayerCore(TXPin, busyPin){ }
+		
+		DFPlayer(SoftwareSerial &serial, uint8_t busyPin) : DFPlayerCore(serial, busyPin){ }
 		
 		void Processing(uint32_t currentMicroTime = millis())
 		{
