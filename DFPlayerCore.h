@@ -10,7 +10,7 @@
 #ifndef DFPlayerCore_h
 #define DFPlayerCore_h
 
-#include "Arduino.h"
+#include <Arduino.h>
 #include <SoftwareSerial.h>
 
 enum DFPlayerSourse
@@ -36,15 +36,6 @@ class DFPlayerCore
 {
 	public:
 	
-		DFPlayerCore(uint8_t TXPin, uint8_t busyPin) : _busyPin(busyPin)
-		{
-			this->_serial = new SoftwareSerial(255, TXPin);
-			pinMode(this->_busyPin, INPUT);
-			this->_cooldownTime = 0;
-			
-			return;
-		}
-		
 		DFPlayerCore(SoftwareSerial &serial, uint8_t busyPin) : _serial(&serial), _busyPin(busyPin)
 		{
 			pinMode(this->_busyPin, INPUT);
@@ -52,6 +43,8 @@ class DFPlayerCore
 			
 			return;
 		}
+		
+		DFPlayerCore(SoftwareSerial &&serial, uint8_t busyPin) = delete;
 		
 		void Begin()
 		{

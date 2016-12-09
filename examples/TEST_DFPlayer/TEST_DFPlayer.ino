@@ -7,13 +7,10 @@
  *	@repo		https://github.com/Dragon-Knight/DFPlayer
  */
 
-#include <SoftwareSerial.h>
 #include <DFPlayer.h>
 
-
-DFPlayer MP3Player(2, 13);
-//SoftwareSerial mySerial(10, 11);
-//DFPlayer MP3Player(mySerial, 13);
+SoftwareSerial mySerial(10, 11);
+DFPlayer MP3Player(mySerial, 13);
 
 void setup()
 {

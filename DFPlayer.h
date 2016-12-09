@@ -10,7 +10,8 @@
 #ifndef DFPlayer_h
 #define DFPlayer_h
 
-#include "Arduino.h"
+#include <Arduino.h>
+#include <SoftwareSerial.h>
 #include "DFPlayerCore.h"
 
 #define DFPLAYER_QUEUE_SIZE			32
@@ -27,9 +28,9 @@ class DFPlayer : public DFPlayerCore
 {
 	public:
 	
-		DFPlayer(uint8_t TXPin, uint8_t busyPin) : DFPlayerCore(TXPin, busyPin){ }
-		
 		DFPlayer(SoftwareSerial &serial, uint8_t busyPin) : DFPlayerCore(serial, busyPin){ }
+		
+		DFPlayer(SoftwareSerial &&serial, uint8_t busyPin) = delete;
 		
 		void Processing(uint32_t currentMicroTime = millis())
 		{
