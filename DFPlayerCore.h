@@ -55,69 +55,59 @@ class DFPlayerCore
 			return;
 		}
 		
-		bool IsBusy() const
-		{
-			return !digitalRead(this->_busyPin);
-		}
-		
-		bool IsReadyReceive() const
-		{
-			return (millis() > this->_cooldownTime);
-		}
-		
 		//////////////////// COMMANDS ////////////////////
 		void PlayNext() const
 		{
-			this->SendData(0x01, 0x00, 0x00, 10);
+			this->SendData(0x01, 0x00, 0x00, 16);
 			
 			return;
 		}
 		
 		void PlayPrevious() const
 		{
-			this->SendData(0x02, 0x00, 0x00, 10);
+			this->SendData(0x02, 0x00, 0x00, 16);
 			
 			return;
 		}
 		
 		void PlayROOT(uint16_t track) const
 		{
-			this->SendData(0x03, highByte(track), lowByte(track), 10);
+			this->SendData(0x03, highByte(track), lowByte(track), 16);
 			
 			return;
 		}
 		
 		void VolumeUp() const
 		{
-			this->SendData(0x04, 0x00, 0x00, 10);
+			this->SendData(0x04, 0x00, 0x00, 16);
 			
 			return;
 		}
 		
 		void VolumeDown() const
 		{
-			this->SendData(0x05, 0x00, 0x00, 10);
+			this->SendData(0x05, 0x00, 0x00, 16);
 			
 			return;
 		}
 		
 		void SetVolume(uint8_t volume) const
 		{
-			this->SendData(0x06, 0x00, volume, 10);
+			this->SendData(0x06, 0x00, volume, 16);
 			
 			return;
 		}
 		
 		void SetEQ(DFPlayerEqualizer eq) const
 		{
-			this->SendData(0x07, 0x00, (uint8_t)eq, 10);
+			this->SendData(0x07, 0x00, (uint8_t)eq, 16);
 			
 			return;
 		}
 		
 		void PlaybackMode(uint8_t mode) const		// По докам тупо повтор трека 1-3000, только откуда?
 		{
-			this->SendData(0x08, 0x00, mode, 10);
+			this->SendData(0x08, 0x00, mode, 16);
 			
 			return;
 		}
@@ -126,7 +116,7 @@ class DFPlayerCore
 		
 		void Sleep() const
 		{
-			this->SendData(0x0A, 0x00, 0x00, 100);
+			this->SendData(0x0A, 0x00, 0x00, 128);
 			
 			return;
 		}
@@ -135,28 +125,28 @@ class DFPlayerCore
 		
 		void Reset() const
 		{
-			this->SendData(0x0C, 0x00, 0x00, 1000);
+			this->SendData(0x0C, 0x00, 0x00, 1024);
 			
 			return;
 		}
 		
 		void Play() const
 		{
-			this->SendData(0x0D, 0x00, 0x00, 10);
+			this->SendData(0x0D, 0x00, 0x00, 16);
 			
 			return;
 		}
 		
 		void Pause() const
 		{
-			this->SendData(0x0E, 0x00, 0x00, 10);
+			this->SendData(0x0E, 0x00, 0x00, 16);
 			
 			return;
 		}
 		
 		void PlayNUM(uint8_t folder, uint8_t track) const
 		{
-			this->SendData(0x0F, folder, track, 10);
+			this->SendData(0x0F, folder, track, 16);
 			
 			return;
 		}
@@ -167,14 +157,14 @@ class DFPlayerCore
 		
 		void PlayMP3(uint16_t track) const
 		{
-			this->SendData(0x12, highByte(track), lowByte(track), 10);
+			this->SendData(0x12, highByte(track), lowByte(track), 16);
 			
 			return;
 		}
 		
 		void PlayADVERT(uint16_t track) const
 		{
-			this->SendData(0x13, highByte(track), lowByte(track), 10);
+			this->SendData(0x13, highByte(track), lowByte(track), 16);
 			
 			return;
 		}
@@ -183,14 +173,14 @@ class DFPlayerCore
 		
 		void StopAdvert() const
 		{
-			this->SendData(0x15, 0x00, 0x00, 10);
+			this->SendData(0x15, 0x00, 0x00, 16);
 			
 			return;
 		}
 		
 		void Stop() const
 		{
-			this->SendData(0x16, 0x00, 0x00, 10);
+			this->SendData(0x16, 0x00, 0x00, 16);
 			
 			return;
 		}
@@ -240,6 +230,16 @@ class DFPlayerCore
 			}
 			
 			return;
+		}
+		
+		bool IsBusy() const
+		{
+			return !digitalRead(this->_busyPin);
+		}
+		
+		bool IsReadyReceive() const
+		{
+			return (millis() > this->_cooldownTime);
 		}
 		//////////////////////////////////////////////////
 	

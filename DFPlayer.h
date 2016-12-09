@@ -17,20 +17,22 @@
 #define DFPLAYER_QUEUE_SIZE			32
 #define DFPLAYER_PROCESSING_DELAY	10
 
-struct DFPlayerQueue
-{
-	uint16_t param1;
-	uint8_t param2;
-	DFPlayerSourse source;
-};
-
 class DFPlayer : public DFPlayerCore
 {
 	public:
 	
-		DFPlayer(SoftwareSerial &serial, uint8_t busyPin) : DFPlayerCore(serial, busyPin){ }
+		DFPlayer(SoftwareSerial &serial, uint8_t busyPin) : DFPlayerCore(serial, busyPin){ return; }
 		
 		DFPlayer(SoftwareSerial &&serial, uint8_t busyPin) = delete;
+		
+		void Begin()
+		{
+			DFPlayerCore::Begin();
+			
+			this->QueueClear();
+			
+			return;
+		}
 		
 		void Processing(uint32_t currentMicroTime = millis())
 		{
@@ -66,9 +68,9 @@ class DFPlayer : public DFPlayerCore
 			{
 				for(uint8_t i = (DFPLAYER_QUEUE_SIZE - 1); i > 0; --i)
 				{
-					this->_queue[i - 1].param1 = this->_queue[i].param1;
-					this->_queue[i - 1].param2 = this->_queue[i].param2;
-					this->_queue[i - 1].source = this->_queue[i].source;
+					this->_queue[i].param1 = this->_queue[i - 1].param1;
+					this->_queue[i].param2 = this->_queue[i - 1].param2;
+					this->_queue[i].source = this->_queue[i - 1].source;
 				}
 				this->_queue[0].param1 = param1;
 				this->_queue[0].param2 = param2;
@@ -113,10 +115,10 @@ class DFPlayer : public DFPlayerCore
 	
 	private:
 	
-		DFPlayerQueue _queue[DFPLAYER_QUEUE_SIZE];
+		struct queueStruct_t{ uint16_t param1; uint8_t param2; DFPlayerSourse source; };
+		queueStruct_t _queue[DFPLAYER_QUEUE_SIZE];
+		uint32_t _lastProcessingTime = 0;
 		uint8_t _queueIndex;
-		
-		uint32_t _lastProcessingTime;
 };
 
 #endif
