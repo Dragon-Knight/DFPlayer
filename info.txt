@@ -1,0 +1,2 @@
+https://www.dfrobot.com/wiki/index.php/DFPlayer_Mini_SKU:DFR0299
+https://github.com/DFRobot/DFPlayer-Mini-mp3/blob/master/DFPlayer_Mini_Mp3/DFPlayer_Mini_Mp3.cpp
